@@ -14,17 +14,21 @@ const guestCount = document.querySelector(".attendance");
 // alert when guest list is full (not yet visible)
 const guestFull = document.querySelector(".alert");
 
+const assignButton = document.querySelector(".assign");
+const assignedItems = document.querySelector(".assigned-items");
+
 
 // invite button
 const addGuestButton = document.querySelector(".invite");
 addGuestButton.addEventListener("click", function(){
-    const guest = guestInput.value;
+    const guests = guestInput.value;
     //console.log(guest);
-    if(guest != " "){
+    if(guests != " "){
         addToList();
         updateGuestCount();
+        clearInput();
         }
-    clearInput();
+   
 });
 const clearInput = function(){
     guestInput.value = " ";
@@ -36,7 +40,7 @@ const addToList = function(guest) {
 
 }
 const  updateGuestCount = function(){
-    let guest = document.querySelectorAll(".guest-list li");
+    const guest = document.querySelectorAll(".guest-list li");
     guestCount.innerText = guest.length;
     if (guest.length===8){
         addGuestButton.classList.add("hide");
@@ -46,4 +50,40 @@ const  updateGuestCount = function(){
 
     }
 }
+//Select Assigned Items & Build an Array
+
+const assignItems = function(){
+    const potluckItems = ['Halloumi',
+    'Melon Skewers',
+    'Prosciutto Bruschetta',
+    'Veggie Nori Rolls',
+     'Stuffed Peppadews',
+     '3-Cheese Tomato Tart',
+     'Zucchini Noodles',
+    'Couscous Salad',
+     'potato salad',
+    'Lemon Cream',
+    'Pesto Pasta Salad',
+    'Tangy Carrot Slaw',
+];
+//Select Elements & Loop Through the Array
+const allGuests = document.querySelectorAll('.guest-list li'); 
+for (let guest of allGuests){
+
+    let randomPotluckIndex = Math.floor(Math.random() * potluckItems.length);
+    let randomPotluckItem = potluckItems[randomPotluckIndex];
+     const listItem = document.createElement("li");
+     listItem.innerText = `${guest.innerText} is bringing ${randomPotluckItem}.`;
+     assignedItems.append(listItem);
+     potluckItems.splice(randomPotluckIndex, 1);
+};
+}
+ //Add an Event Listener & Update PotluckItems Array
+ assignButton.addEventListener("click", function(){
+    assignItems();
+    assignButton.disabled = true;
+ });
+
+
+
 
