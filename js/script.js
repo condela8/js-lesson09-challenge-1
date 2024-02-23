@@ -24,7 +24,7 @@ addGuestButton.addEventListener("click", function(){
     const guests = guestInput.value;
     //console.log(guest);
     if(guests != " "){
-        addToList();
+        addToList(guests);
         updateGuestCount();
         clearInput();
         }
